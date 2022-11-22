@@ -22,7 +22,7 @@ def week_list(errornum):
 #engine = create_engine("mysql+mysqldb://root:"+"password"+"@localhost/db_name", encoding='utf-8')
     temp = []
     df = pd.DataFrame(columns=['ymw'])
-    engine = create_engine("mysql+pymysql://root:0000@localhost/unitsize", encoding= 'utf-8')
+    engine = create_engine("mysql+pymysql://root:0000@localhost/Kyobo", encoding= 'utf-8')
     conn = engine.connect()
     time.sleep(2)
     options = webdriver.ChromeOptions()
@@ -39,34 +39,14 @@ def week_list(errornum):
         firstclick1.click()
     except Exception as e:
         pass
+    periods = driver.find_elements(By.CSS_SELECTOR, 'selListType > option')
+    for period in periods :
+        week_period = period.get_attribute('value')
+        temp.append(week_period)
 
-    for i in range(errornum,54):
-        time.sleep(2)
-        #driver.find_element(By.CSS_SELECTOR, "#selListType-button").send_keys(Keys.ENTER)
-        #기간 변경하기위해 처음 클릭
-        try :
-            firstclick1 = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, "#selListType-button")))
-            firstclick1.click()
-            driver.implicitly_wait(100)
-        except Exception as e:
-            pass
-        time.sleep(2)
-        #해당 기간 선택
-        try :
-            weekChange = WebDriverWait(driver,10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, f"#selListType-menu > li:nth-child({i})")))
-            weekChange.click()
-            driver.implicitly_wait(100)
-        except Exception as e:
-            pass
-        time.sleep(2)
-        driver.implicitly_wait(100)
-        #데이터가 몇주인지 파악해서 라벨링
-        period = driver.find_element(By.CSS_SELECTOR, '#baseDateText').text
-        period_num =  re.sub(r'[^0-9]', '', period)
-        time.sleep(1)
-        temp.append(period_num)
-        temp = duplicate_check(temp)
-        time.sleep(1)
+    #selListType > option:nth-child(1)
+        #period_num =  re.sub(r'[^0-9]', '', period)
+    time.sleep(1)
     df['ymw'] = temp
     df.to_sql(name='week_list', con= engine, if_exists= 'append', index=False)
 

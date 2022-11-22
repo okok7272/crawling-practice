@@ -73,7 +73,7 @@ for i in range(2,54):
             #tabRoot > div.view_type_list.switch_prod_wrap > ol:nth-child(1) > li:nth-child(1) > div.prod_area.horizontal > div.prod_info_box > div.prod_bottom > div > span.review_klover_box > span.review_desc
             #한줄평
             #tabRoot > div.view_type_list.switch_prod_wrap > ol:nth-child(1) > li:nth-child(1) > div.prod_area.horizontal > div.prod_info_box > div.prod_bottom > div > span.review_quotes_text.font_size_xxs
-            #one_comment = item.find_element(By.CSS_SELECTOR, 'div.prod_area.horizontal > div.prod_info_box > div.prod_bottom > div > span.review_quotes_text.font_size_xxs').text
+            one_comment = item.find_element(By.CSS_SELECTOR, 'div.prod_area.horizontal > div.prod_info_box > div.prod_bottom > div > span.review_quotes_text.font_size_xxs').text
             #pd.DataFrame(columns=['단위', '기간', '카테고리', '순위', '제목', '저자 및 출판사', '연도', '평점', '리뷰개수', '한줄평'])
             new_row = {'단위' : unit_size, '기간' : period, '카테고리' : category, '순위' : rank, '제목' : title, '저자출판사' : author, '연도' : year, '평점' : review_score, '리뷰개수' : review_num}
             df = df.append(new_row, ignore_index = True)

@@ -12,6 +12,8 @@ from selenium.common.exceptions import NoSuchElementException
 from sqlalchemy import create_engine
 import pandas as pd
 import re
+from bs4 import BeautifulSoup
+import urllib.request
 
 def duplicate_check(x):
     du_temp = dict.fromkeys(x)
